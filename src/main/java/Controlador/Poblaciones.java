@@ -79,11 +79,16 @@ public class Poblaciones extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<String> pueblos = Utilidades.getPoblaciones(rutaFicheros.concat(File.separator).concat("Albacete.txt"));
+        String provinciaSeleccionada = "Albacete";
+        if(request.getParameter("provincia")!=null){
+            provinciaSeleccionada=request.getParameter("provincia");
+        }
+        String archivoSeleccionado = provinciaSeleccionada.replace(" ","").concat(".txt");
+        ArrayList<String> pueblos = Utilidades.getPoblaciones(rutaFicheros.concat(File.separator).concat(archivoSeleccionado));
         request.setAttribute("provincias", provincias);
+        request.setAttribute("provincia", provinciaSeleccionada);
         request.setAttribute("pueblos", pueblos);
-        request.setAttribute("provincia", "Albacete");
-        request.getRequestDispatcher("vista/pueblos.jsp").forward(request, response);  
+        request.getRequestDispatcher("vista/pueblos.jsp").forward(request,response);
     }
 
     /**
@@ -97,7 +102,12 @@ public class Poblaciones extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String archivoSeleccionado = request.getParameter("provincia").replace(" ","").concat(".txt");
+        ArrayList<String> pueblos = Utilidades.getPoblaciones(rutaFicheros.concat(File.separator).concat(archivoSeleccionado));
+        request.setAttribute("provincias", provincias);
+        request.setAttribute("provincia", request.getParameter("provincia"));
+        request.setAttribute("pueblos", pueblos);
+        request.getRequestDispatcher("vista/pueblos.jsp").forward(request,response);
     }
 
     /**

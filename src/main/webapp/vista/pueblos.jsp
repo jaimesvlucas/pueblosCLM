@@ -11,30 +11,34 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     
+    <div class="container">
         <h1>Pueblos de Castilla la Mancha</h1>
         <%
             ArrayList<String> pueblos = ( ArrayList<String> ) request.getAttribute("pueblos");
             ArrayList<String> provincias = ( ArrayList<String> ) request.getAttribute("provincias");
             String provincia = (String)request.getAttribute("provincia");
+            String textoselected ="";
         %>
         Provincia seleccionada: <%= provincia%> <br>
-        <form action="Poblaciones" method="post">
-            <select name="provincias">
+        <form action="Poblaciones" method="get">
+            <select class="form-control" name="provincia">
                 <%for(int i=0;i<provincias.size();i++){
-                    if(provincias.get(i).equals(provincia)){
+                    if(provincia.equals(provincias.get(i))){
+                        textoselected=" selected";
+                    }
                 %>
-                    <option selected  value=" <%= provincias.get(i)%>"><%= provincias.get(i)%></option>
-                <%}else{%>
-                    <option value=" <%= provincias.get(i)%>"><%= provincias.get(i)%></option>
-                <%}}%>
+                    <option <%=textoselected%> value=" <%= provincias.get(i)%>"><%= provincias.get(i)%></option>
+                <%}%>
             </select><br>
-            <select name="pueblos">
+            <select class="form-control" name="pueblos">
                 <%for(int i=0;i<pueblos.size();i++){%>
                     <option  value=" <%= pueblos.get(i)%>"><%= pueblos.get(i)%></option>
                 <%}%>
-            </select>
-            <input type="submite" value="Consultar">
+            </select><br>
+            <input type="submit" value="Consultar">
         </form>
+    </div>
 </html>
