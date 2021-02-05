@@ -22,17 +22,15 @@
             String provincia = (String)request.getAttribute("provincia");
             String textoselected ="";
         %>
-        Provincia seleccionada: <%= provincia%> <br>
-        <form action="Poblaciones" method="get">
-            <select class="form-control" name="provincia">
+        <h4>Provincia seleccionada: <%= provincia%></h4> <br>
+        <form action="Poblaciones" method="get">       
                 <%for(int i=0;i<provincias.size();i++){
-                    if(provincia.equals(provincias.get(i))){
-                        textoselected=" selected";
-                    }
-                %>
-                    <option <%=textoselected%> value=" <%= provincias.get(i)%>"><%= provincias.get(i)%></option>
-                <%}%>
-            </select><br>
+                    if(provincia.equals(provincias.get(i))){%>
+                <a class="btn btn-primary" href="Poblaciones?provincia=<%= provincias.get(i)%>" ><%= provincias.get(i)%></a>
+                <%}else{%>
+                <a class="btn btn-dark" href="Poblaciones?provincia=<%= provincias.get(i)%>" ><%= provincias.get(i)%></a>
+                <%}}%>
+                <br><br>
             <select class="form-control" name="pueblos">
                 <%for(int i=0;i<pueblos.size();i++){%>
                     <option  value=" <%= pueblos.get(i)%>"><%= pueblos.get(i)%></option>
